@@ -100,15 +100,15 @@ module.exports = {
     ],
   //   /* Advanced module configuration (click to show) */
   },
-  // resolve: {
+  resolve: {
   //   // options for resolving module requests
   //   // (does not apply to resolving to loaders)
-  //   modules: [
-  //     "node_modules",
-  //     path.resolve(__dirname, "app")
-  //   ],
+    modules: [
+      "node_modules",
+      `${__dirname}/static_src`
+    ],
   //   // directories where to look for modules
-  //   extensions: [".js", ".json", ".jsx", ".css"],
+    extensions: [".js", ".json", ".jsx", ".css"],
   //   // extensions that are used
   //   alias: {
   //     // a list of module name aliases
@@ -122,7 +122,7 @@ module.exports = {
   //   },
   //   /* Alternative alias syntax (click to show) */
   //   /* Advanced resolve configuration (click to show) */
-  // },
+  },
   // performance: {
   //   hints: "warning", // enum
   //   maxAssetSize: 200000, // int (in bytes),
