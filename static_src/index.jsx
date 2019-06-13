@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const component = <h1>Components</h1>;
-
+import MessageField from './components/MessageField';
 
 ReactDOM.render(
-	component,
-	document.getElementById('title'),
+	<MessageField />,
+	document.getElementById('root'),
 );
