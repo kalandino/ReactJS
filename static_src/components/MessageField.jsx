@@ -1,52 +1,75 @@
 import React from 'react';
 import Message from './Message';
+import { TextField, FloatingActionButton  } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
 
 export default class MessageField extends React.Component {
-	state = {
-		messages: ["Привет", "Как дела?"]
-	};
+  state = {
+    messages: [{ text: "Привет!", sender: 'me' }, { text: "Как дела?", sender: 'me' }],
+    input: '',
+  };
 
-	newMessage = false;
+  handleSendMessage = () => {
+    if (this.state.input.length > 0) {
+      this.setState({
+        messages: [ ...this.state.messages, {text: this.state.input, sender: 'me'} ],
+        input: '',
+      });
+    }
+  };
 
-	answers = ['Привет!', 'И тебе', 'Я занят', 'Hello', 'Напишу позже'];
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.messages.length < this.state.messages.length &&
+      this.state.messages[this.state.messages.length - 1].sender === 'me') {
+      setTimeout(this.botAnswer, 500);
+    }
+  }
 
-	randomNumber(num) {
-	 	return (Math.round(Math.random() * num));
-	};
+  answers = ['Привет!', 'И тебе', 'Я занят', 'Hello', 'Напишу позже', 'Отстань, я робот'];
 
-	handleClick = () => {
-		this.setState({ messages: [ ...this.state.messages, 'Привет' ] });
-		this.newMessage = true;
-	};
+  randomNumber(num) {
+    return (Math.round(Math.random() * num));
+  };
 
-	roboAnswer = () => {
-		var num = this.randomNumber(this.answers.length - 1);
+  botAnswer = () => {
+    var num = this.randomNumber(this.answers.length - 1);
+    this.setState({ messages: [ ...this.state.messages, {text: this.answers[num], sender: 'bot'} ] });
+  };
 
-		this.setState({ messages: [ ...this.state.messages, this.answers[num] ] });
-		this.newMessage = false;
-	};
+  handleType = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-	componentDidUpdate(prevProps, prevState) {
-		console.log('prevState:', prevState, 'prevProps:', prevProps);
-		console.log('thisState:', this.state, 'thisProps:', this.props);
+  handleKeyUp = (e) => {
+    if (e.keyCode === 13) { // Enter
+      this.handleSendMessage();
+    }
+  };
 
-		if (this.newMessage) {
-    	this.roboAnswer();
-  	}
-	}
+  render() {
+    const messageElements = this.state.messages.map((msgObj, index) => (
+      <Message key={ index } text={ msgObj.text } sender={ msgObj.sender } />));
 
-	render() {
-		const messageElements = this.state.messages.map((text, index) => (
-			<Message key={ index } text={ text } />));
-
-		return <div>
-			{ messageElements }
-			<button onClick={ this.handleClick }>Отправить собщение</button>
-		</div>
-	}
+    return (
+      <div className="message-field">
+        { messageElements }
+        <TextField
+          name="input"
+          value={ this.state.input }
+          onChange={ this.handleType }
+          onKeyUp={ this.handleKeyUp }
+          hintText="Напишите сообщение"
+        />
+        <FloatingActionButton
+          onClick={ this.handleSendMessage }
+          mini={ true }
+          style={{
+            verticalAlign: 'middle',
+            marginLeft: '16px'
+          }}>
+          <SendIcon />
+        </FloatingActionButton>
+      </div>
+    )
+  }
 }
-
-
-
-
-
