@@ -10,8 +10,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-    	// <Layout />
+  	return (
       <Switch>
         <Route exact path='/' component={ Layout } />
         <Route exact path='/profile/' render={ () => <Message text="Профиль" sender="me" /> } />

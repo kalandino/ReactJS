@@ -81,22 +81,24 @@ export default class MessageField extends React.Component {
             <div className="message-field">
                 { messageElements }
             </div>
-            <TextField
-                name="input"
-                value={ this.state.input }
-                onChange={ this.handleType }
-                onKeyUp={ this.handleKeyUp }
-                hintText="Напишите сообщение"
-            />
-            <FloatingActionButton
-              onClick={ this.handleSendMessage }
-              mini={ true }
-              style={{
-                verticalAlign: 'middle',
-                marginLeft: '16px'
-              }}>
-              <SendIcon />
-            </FloatingActionButton>
+            <div className="input-field">
+              <TextField
+                  name="input"
+                  value={ this.state.input }
+                  onChange={ this.handleType }
+                  onKeyUp={ this.handleKeyUp }
+                  hintText="Напишите сообщение"
+              />
+              <FloatingActionButton
+                onClick={ this.handleSendMessage }
+                mini={ true }
+                style={{
+                  verticalAlign: 'middle',
+                  marginLeft: '16px'
+                }}>
+                <SendIcon />
+              </FloatingActionButton>
+            </div>
           </div>
         )
     }
