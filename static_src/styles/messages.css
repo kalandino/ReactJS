@@ -1,0 +1,12 @@
+.message-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.bot-message {
+  align-self: flex-start;
+}
+
+.my-message {
+  align-self: flex-end;
+}

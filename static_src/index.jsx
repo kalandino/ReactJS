@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './components/Layout';
-// import MessageField from './components/MessageField';
+import { BrowserRouter } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import App from './components/App';
 
 ReactDOM.render(
-    <MuiThemeProvider>
-        <Layout />
-    </MuiThemeProvider>,
+    <BrowserRouter>
+        <MuiThemeProvider>
+            <App />
+        </MuiThemeProvider>
+    </BrowserRouter>,
     document.getElementById('root'),
 );

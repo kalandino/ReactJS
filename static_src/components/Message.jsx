@@ -9,8 +9,12 @@ export default class Message extends React.Component {
   };
 
   render() {
-    return <Chip style={ this.props.sender === 'bot' ? { backgroundColor: 'lightblue' } : {} }>
-      { this.props.text }
-    </Chip>
+  	this.props.sendMessage();
+
+    return (
+    	<Chip className={ this.props.sender === 'bot' ? 'bot-message' : 'my-message' } >
+      	{ this.props.text }
+    	</Chip>
+    )
   }
 }

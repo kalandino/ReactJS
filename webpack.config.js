@@ -168,4 +168,10 @@ module.exports = {
   //   // ...
   // ],
   // list of additional plugins
+  watch: NODE_ENV === 'development',
+  watchOptions: {
+      aggregateTimeout: 100,
+  },
+
+  devtool: NODE_ENV === 'development' ? 'cheap-inline-module-source-map' : false,
 };
