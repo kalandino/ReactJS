@@ -1,0 +1,35 @@
+* {
+	box-sizing: border-box;
+}
+
+.content {
+	margin: 0 auto;
+	max-width: 900px;
+}
+
+.header {
+	margin-bottom: 10px;
+	min-height: 50px;
+	padding: 16px;
+	color: #fff;
+	background-color: #666;
+}
+
+.layout {
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.layout__section-left {
+	margin-right: 10px;
+	width: 300px;
+	min-height: 400px;
+	border: 1px solid #666;
+}
+
+.layout__section-right {
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	min-height: 400px;
+	border: 1px solid #666;
+}

@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MessageField from './components/MessageField';
+import { BrowserRouter } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import App from './components/App';
 
 ReactDOM.render(
-	<MessageField />,
-	document.getElementById('root'),
+  <BrowserRouter>
+    <MuiThemeProvider>
+      <App />
+    </MuiThemeProvider>
+  </BrowserRouter>,
+  document.getElementById('root')
 );

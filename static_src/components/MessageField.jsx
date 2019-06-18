@@ -1,52 +1,55 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import Message from './Message';
+import { TextField, FloatingActionButton } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
+import '../styles/messages';
 
 export default class MessageField extends React.Component {
-	state = {
-		messages: ["Привет", "Как дела?"]
-	};
+  static propTypes = {
+    chatId: PropTypes.number,
+    chats: PropTypes.object,
+    messages: PropTypes.object,
+    input: PropTypes.string,
+    handleSendMessage: PropTypes.func,
+    handleType: PropTypes.func,
+    handleKeyUp: PropTypes.func,
+  };
 
-	newMessage = false;
+  static defaultProps = {
+    chatId: 1,
+  };
 
-	answers = ['Привет!', 'И тебе', 'Я занят', 'Hello', 'Напишу позже'];
+  render() {
+    const { chatId, messages, chats } = this.props;
 
-	randomNumber(num) {
-	 	return (Math.round(Math.random() * num));
-	};
+    const messageElements = chats[chatId]['messageList'].map((msgId, index) => (
+      <Message sendMessage={ this.props.handleSendMessage } key={ index } text={ messages[msgId].text } sender={ messages[msgId].sender } />));
 
-	handleClick = () => {
-		this.setState({ messages: [ ...this.state.messages, 'Привет' ] });
-		this.newMessage = true;
-	};
-
-	roboAnswer = () => {
-		var num = this.randomNumber(this.answers.length - 1);
-
-		this.setState({ messages: [ ...this.state.messages, this.answers[num] ] });
-		this.newMessage = false;
-	};
-
-	componentDidUpdate(prevProps, prevState) {
-		console.log('prevState:', prevState, 'prevProps:', prevProps);
-		console.log('thisState:', this.state, 'thisProps:', this.props);
-
-		if (this.newMessage) {
-    	this.roboAnswer();
-  	}
-	}
-
-	render() {
-		const messageElements = this.state.messages.map((text, index) => (
-			<Message key={ index } text={ text } />));
-
-		return <div>
-			{ messageElements }
-			<button onClick={ this.handleClick }>Отправить собщение</button>
-		</div>
-	}
+    return (
+      <div>
+        <div className="message-field">
+            { messageElements }
+        </div>
+        <div className="input-field">
+          <TextField
+            name="input"
+            value={ this.props.input }
+            onChange={ this.props.handleType }
+            onKeyUp={ this.props.handleKeyUp }
+            hintText="Напишите сообщение"
+          />
+          <FloatingActionButton
+            onClick={ this.props.handleSendMessage }
+            mini={ true }
+            style={{
+              verticalAlign: 'middle',
+              marginLeft: '16px'
+            }}>
+            <SendIcon />
+          </FloatingActionButton>
+        </div>
+      </div>
+    )
+  }
 }
-
-
-
-
-
