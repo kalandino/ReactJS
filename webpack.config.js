@@ -25,6 +25,7 @@ module.exports = {
         test: /\.(js|jsx)$/,
         include: `${__dirname}/static_src`,
         loader: "babel-loader?presets[]=react&presets[]=es2015&presets[]=stage-1",
+        // exclude: `${__dirname}/node_modules`,
       },
       {
         test: /\.css$/,
