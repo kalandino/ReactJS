@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 
+
 class Header extends React.Component {
   static propTypes = {
     chatId: PropTypes.number,
@@ -24,7 +25,7 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = ({ messageReducer }) => ({
-    messageCounter: Object.keys(messageReducer.messages).length,
+  messageCounter: Object.keys(messageReducer.messages).length,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);

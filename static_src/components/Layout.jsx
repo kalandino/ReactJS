@@ -5,6 +5,7 @@ import ChatList from './ChatList';
 import MessageField from './MessageField';
 import '../styles/layout';
 
+
 export default class Layout extends React.Component {
   static propTypes = {
     chatId: PropTypes.number,

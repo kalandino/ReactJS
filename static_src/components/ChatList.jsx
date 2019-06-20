@@ -4,6 +4,7 @@ import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 
+
 export default class ChatList extends React.Component {
   render() {
     return (

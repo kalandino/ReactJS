@@ -4,6 +4,7 @@ import ChatList from './ChatList';
 import '../styles/profile';
 import '../styles/layout';
 
+
 export default class Profile extends React.Component {
 
   render() {
