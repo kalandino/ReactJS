@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   static propTypes = {
     chatId: PropTypes.number,
-    chats: PropTypes.object,
+    messageCounter: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
@@ -12,13 +14,22 @@ export default class Header extends React.Component {
   };
 
   render() {
-  	const { chats, chatId } = this.props;
-
     return (
-      <h1 className="header">Чат { chatId }, Количество сообщений: { chats[chatId]['messageList'].length }</h1>
+      <div className="header">
+        <span>Чат { this.props.chatId }</span>
+        <span>Число собщений: { this.props.messageCounter }</span>
+      </div>
     )
   }
 }
+
+const mapStateToProps = ({ messageReducer }) => ({
+    messageCounter: Object.keys(messageReducer.messages).length,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 
 
