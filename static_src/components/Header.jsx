@@ -7,7 +7,7 @@ import connect from "react-redux/es/connect/connect";
 class Header extends React.Component {
   static propTypes = {
     chatId: PropTypes.number,
-    messageCounter: PropTypes.number.isRequired,
+    chats: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -15,17 +15,19 @@ class Header extends React.Component {
   };
 
   render() {
+    const { chatId, chats } = this.props;
+
     return (
       <div className="header">
-        <span>Чат { this.props.chatId }</span>
-        <span>Число собщений: { this.props.messageCounter }</span>
+        <div>Чат { chatId }</div>
+        <div>Число собщений: { chats[chatId]['messageList'].length }</div>
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ messageReducer }) => ({
-  messageCounter: Object.keys(messageReducer.messages).length,
+const mapStateToProps = ({ chatReducer }) => ({
+  chats: chatReducer.chats,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);

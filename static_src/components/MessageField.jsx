@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {bindActionCreators} from "redux";
+import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
@@ -76,7 +76,7 @@ class MessageField extends React.Component {
     return (
       <div>
         <div className="message-field">
-            { messageElements }
+          { messageElements }
         </div>
         <div className="input-field">
           <TextField
