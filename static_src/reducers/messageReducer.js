@@ -12,7 +12,7 @@ export default function messageReducer(store = initialStore, action) {
       return update(store, {
         messages: { $set: { ...store.messages, [action.messageId]: {text: action.text, sender: action.sender} } },
       });
-    }
+    };
     default:
       return store;
   }
