@@ -1,52 +1,92 @@
 import React from 'react';
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
+import { TextField, FloatingActionButton } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
 import Message from './Message';
+import { sendMessage } from "../actions/messageActions";
+import '../styles/messages';
 
-export default class MessageField extends React.Component {
-	state = {
-		messages: ["Привет", "Как дела?"]
-	};
 
-	newMessage = false;
+class MessageField extends React.Component {
+  static propTypes = {
+    chatId: PropTypes.number,
+    chats: PropTypes.object.isRequired,
+    sendMessage: PropTypes.func.isRequired,
+    messages: PropTypes.object.isRequired,
+  };
 
-	answers = ['Привет!', 'И тебе', 'Я занят', 'Hello', 'Напишу позже'];
+  static defaultProps = {
+    chatId: 1,
+  };
 
-	randomNumber(num) {
-	 	return (Math.round(Math.random() * num));
-	};
+  state = {
+    input: ''
+  };
 
-	handleClick = () => {
-		this.setState({ messages: [ ...this.state.messages, 'Привет' ] });
-		this.newMessage = true;
-	};
+  handleSendMessage = () => {
+    const { input } = this.state;
+    const { chatId, messages } = this.props;
 
-	roboAnswer = () => {
-		var num = this.randomNumber(this.answers.length - 1);
+    if (input.length > 0) {
+      const messageId = Object.keys(messages).length + 1;
+      this.props.sendMessage(messageId, input, 'me', chatId);
+      this.setState({
+        input: '',
+      });
+    }
+  };
 
-		this.setState({ messages: [ ...this.state.messages, this.answers[num] ] });
-		this.newMessage = false;
-	};
+  handleType = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-	componentDidUpdate(prevProps, prevState) {
-		console.log('prevState:', prevState, 'prevProps:', prevProps);
-		console.log('thisState:', this.state, 'thisProps:', this.props);
+  handleKeyUp = (e) => {
+    if (e.keyCode === 13) {
+      this.handleSendMessage();
+    }
+  };
 
-		if (this.newMessage) {
-    	this.roboAnswer();
-  	}
-	}
+  render() {
+    const { chatId, chats, messages } = this.props;
 
-	render() {
-		const messageElements = this.state.messages.map((text, index) => (
-			<Message key={ index } text={ text } />));
+    const messageElements = chats[chatId]['messageList'].map((msgId, index) => (
+      <Message key={ index } text={ messages[msgId].text } sender={ messages[msgId].sender } />));
 
-		return <div>
-			{ messageElements }
-			<button onClick={ this.handleClick }>Отправить собщение</button>
-		</div>
-	}
+    return (
+      <div>
+        <div className="message-field">
+          { messageElements }
+        </div>
+        <div className="input-field">
+          <TextField
+            name="input"
+            value={ this.state.input }
+            onChange={ this.handleType }
+            onKeyUp={ this.handleKeyUp }
+            hintText="Напишите сообщение"
+          />
+          <FloatingActionButton
+            onClick={ this.handleSendMessage }
+            mini={ true }
+            style={{
+              verticalAlign: 'middle',
+              marginLeft: '16px'
+            }}>
+            <SendIcon />
+          </FloatingActionButton>
+        </div>
+      </div>
+    )
+  }
 }
 
+const mapStateToProps = ({ messageReducer, chatReducer }) => ({
+  messages: messageReducer.messages,
+  chats: chatReducer.chats,
+});
 
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMessage }, dispatch);
 
-
-
+export default connect(mapStateToProps, mapDispatchToProps)(MessageField);
