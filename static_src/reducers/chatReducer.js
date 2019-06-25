@@ -39,7 +39,7 @@ export default function chatReducer(store = initialStore, action) {
       return update(store, {
         highlightedChat: { $set: undefined },
       });
-    }
+    };
     default:
       return store;
   }
