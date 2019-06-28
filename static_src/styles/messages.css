@@ -1,0 +1,17 @@
+.message-field {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.input-field {
+	padding: 16px;
+}
+
+.bot-message {
+  align-self: flex-start;
+}
+
+.my-message {
+  align-self: flex-end;
+}
