@@ -2,26 +2,33 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { push } from 'react-router-redux';
 import { List, ListItem } from 'material-ui/List';
+import CircularProgress from 'material-ui/CircularProgress';
 import Avatar from 'material-ui/Avatar';
 import FileFolder from 'material-ui/svg-icons/file/folder';
 import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
-import { sendChat } from "../actions/chatActions";
+import { sendChat, loadChats } from "../actions/chatActions";
 
 
 class ChatList extends React.Component {
   static propTypes = {
     push: PropTypes.func.isRequired,
     sendChat: PropTypes.func.isRequired,
+    loadChats: PropTypes.func.isRequired,
     chats: PropTypes.object.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     highlightedChat: PropTypes.number,
   };
 
   static defaultProps = {
     highlightedChat: undefined,
   };
+
+  componentDidMount () {
+    this.props.loadChats();
+  }
 
   handleNavigate = (link) => {
     this.props.push(link)
@@ -55,6 +62,10 @@ class ChatList extends React.Component {
   };
 
   render() {
+    if (this.props.isLoading) {
+      return <CircularProgress />
+    }
+
     const { chats, highlightedChat } = this.props;
     
     const chatElements = Object.keys(chats).map((chId, index) => (
@@ -98,9 +109,10 @@ class ChatList extends React.Component {
 
 const mapStateToProps = ({ chatReducer }) => ({
   chats: chatReducer.chats,
+  isLoading: chatReducer.isLoading,
   highlightedChat: chatReducer.highlightedChat,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ push, sendChat }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ push, sendChat, loadChats }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

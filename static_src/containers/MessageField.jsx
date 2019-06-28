@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import connect from "react-redux/es/connect/connect";
 import { TextField, FloatingActionButton } from 'material-ui';
 import SendIcon from 'material-ui/svg-icons/content/send';
-import Message from './Message';
+import Message from '../components/Message';
 import { sendMessage } from "../actions/messageActions";
 import '../styles/messages';
 

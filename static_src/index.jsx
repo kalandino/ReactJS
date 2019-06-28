@@ -5,7 +5,7 @@ import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { createBrowserHistory as createHistory } from 'history';
 import { PersistGate } from 'redux-persist/integration/react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import App from './components/App';
+import App from './containers/App';
 import initStore from './utils/store';
 
 const history = createHistory();

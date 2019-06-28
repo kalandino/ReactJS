@@ -10,7 +10,7 @@ const persistConfig = {
   key: 'root',
   storage,
   stateReconciler: autoMergeLevel2,
-  whitelist: ['messageReducer', 'chatReducer', 'blinkReducer'],
+  whitelist: ['messageReducer', 'chatReducer', 'profileReducer'],
 };
 
 function store(additionalMiddlewares = []) {

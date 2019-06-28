@@ -11,7 +11,8 @@ module.exports = {
 
   output: {
     path: `${__dirname}/static/build`,
-    filename: "app.js", // string
+    // filename: "app.js", // string
+    filename: NODE_ENV === 'development' ? '[name].js' : '[name]-[hash].js',
     publicPath: "/static/build", // string
   },
 
