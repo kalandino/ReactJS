@@ -3,9 +3,37 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ReactJS</title>
+	<!-- Add manifest -->
+	<link rel="manifest" href="manifest/manifest.json">
+	<!-- Tell the browser it's a PWA -->
 </head>
 <body>
 	<div id="root" class="test"></div>
 	<script src="static/build/app.js"></script>
+	<script>
+		if ('serviceWorker' in navigator) {
+		  window.addEventListener('load', function() {
+		    navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+		      // Registration was successful
+		      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		    }, function(err) {
+		      // registration failed :(
+		      console.log('ServiceWorker registration failed: ', err);
+		    }).catch(function(err) {
+		      console.log(err)
+		    });
+		  });
+		} else {
+		  console.log('service worker is not supported');
+		}
+	</script>
+	<script>
+		window.addEventListener('appinstalled', (evt) => {
+		  fetch('https://my_url/statistics', {
+	      method: 'GET',
+	      credentials: 'include',
+		  });
+		});
+	</script>
 </body>
 </html>
